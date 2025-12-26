@@ -1,6 +1,9 @@
 import express, { Application } from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import userRoutes from "./routes/user.routes"
+import knowledgeRoutes from "./routes/knowledge.routes"
+import { errorHandler } from "./middlewares/error.middleware";
 
 dotenv.config();
 
@@ -17,9 +20,16 @@ mongoose.connect(MONGODB_URI)
     console.error("Error connecting to MongoDB:", error);
   });
 
+app.use(express.json())
+
+app.use('/api/users', userRoutes)
+app.use('/api/knowledge', knowledgeRoutes)
+
 app.get("/", (req, res) => {
   res.send("Family Legacy Server is running");
 });
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

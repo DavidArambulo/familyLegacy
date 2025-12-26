@@ -25,7 +25,7 @@ const knowledgeSchema = new Schema<IKnowledge> ({
     owner: { 
         type: Schema.Types.ObjectId, 
         ref: 'User', 
-        required: true 
+        // required: true
     },
     content: { type: String, required: true },
     groups: [{ type: String }],
